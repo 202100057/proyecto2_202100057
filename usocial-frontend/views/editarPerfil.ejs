@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Perfil</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <!-- Contenido del encabezado aquí -->
+  </header>
+  <main class="content">
+    <h1>Editar Perfil</h1>
+    <form id="edit-profile-form">
+      <label for="username">Nombre de usuario:</label>
+      <input type="text" id="username" name="username" value="<%= user.username %>" required />
+      <br>
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" value="<%= user.email %>" required />
+      <br>
+      <label for="bio">Biografía:</label>
+      <textarea id="bio" name="bio"><%= user.bio %></textarea>
+      <br>
+      <label for="website">Sitio web:</label>
+      <input type="url" id="website" name="website" value="<%= user.website %>" />
+      <br>
+      <label for="anonymous-posting">Publicar anónimamente:</label>
+      <input type="checkbox" id="anonymous-posting" name="anonymous-posting" <%= user.anonymousPosting? 'checked' : '' %> />
+      <br>
+      <button type="submit">Guardar cambios</button>
+    </form>
+  </main>
+  <footer class="footer">
+    <!-- Contenido del pie de página aquí -->
+  </footer>
+  <script>
+    const form = document.getElementById('edit-profile-form');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const response = await fetch('/api/usuarios/<%= user._id %>', {
+        method: 'PUT',
+        body: formData,
+      });
+
+      if (response.ok) {
+        // Redirigir a la página de perfil del usuario
+        window.location.href = '/perfil';
+      } else {
+        console.error(await response.json());
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<div id="feed">
+    <% if (posts) { %>
+      <% posts.forEach(function(post) { %>
+        <div>
+          <h3><%= post.título %></h3>
+          <p><%= post.descripción %></p>
+          <p>Categoría: <%= post.categoría %></p>
+          <p>
+            Publicado por: <%= post.usuario.nombreDeUsuario %> <%= post.anónimo? '(Anónimo)' : '' %>
+          </p>
+          <% if (post.imagen) { %>
+            <img src="<%= post.imagen %>" alt="<%= post.título %>" />
+          <% } %>
+          <p>Fecha: <%= new Date(post.createdAt).toLocaleString() %></p>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No hay publicaciones disponibles.</p>
+    <% } %>
+  </div>
+  
+  <script>
+    fetch('/api/posts/feed')
+     .then(response => response.json())
+     .then(posts => {
+        let feedHTML = '';
+        posts.forEach(post => {
+          feedHTML += `
+            <div>
+              <h3>${post.título}</h3>
+              <p>${post.descripción}</p>
+              <p>Categoría: ${post.categoría}</p>
+              <p>
+                Publicado por: ${post.usuario.nombreDeUsuario} ${post.anónimo? '(Anónimo)' : ''}
+              </p>
+              ${post.imagen? `<img src="${post.imagen}" alt="${post.título}" />` : ''}
+              <p>Fecha: ${new Date(post.createdAt).toLocaleString()}</p>
+            </div>
+          `;
+        });
+        document.getElementById('feed').innerHTML = feedHTML;
+      })
+     .catch(error => console.error(error));
+  </script>
+  

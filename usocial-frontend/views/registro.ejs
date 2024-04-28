@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+</head>
+<body>
+    <h1>Registrarse</h1>
+    <form action="/registro" method="POST">
+        <label for="carnet">Carnet:</label>
+        <input type="text" id="carnet" name="carnet" required>
+        <br>
+        <label for="nombres">Nombres:</label>
+        <input type="text" id="nombres" name="nombres" required>
+        <br>
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" required>
+        <br>
+        <label for="genero">Género:</label>
+        <input type="text" id="genero" name="genero" required>
+        <br>
+        <label for="facultad">Facultad:</label>
+        <input type="text" id="facultad" name="facultad" required>
+        <br>
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" name="correo" required>
+        <br>
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" required>
+        <br>
+        <button type="submit">Registrarse</button>
+    </form>
+    <% if (message.type === 'success') { %>
+      <div class="alert alert-success" role="alert">
+        <%= message.text %>
+      </div>
+    <% } %>
+    <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a></p>
+</body>
+</html>
